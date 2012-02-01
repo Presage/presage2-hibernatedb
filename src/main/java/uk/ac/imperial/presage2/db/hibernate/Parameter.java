@@ -20,10 +20,8 @@ package uk.ac.imperial.presage2.db.hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "PARAMETERS")
 class Parameter {
 
 	@Id
