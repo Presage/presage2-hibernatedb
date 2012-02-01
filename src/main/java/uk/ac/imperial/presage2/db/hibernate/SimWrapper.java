@@ -50,9 +50,20 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 
 	@Override
 	public void addParameter(String name, Object value) {
-		startTransaction();
-		Parameter param = new Parameter(getID(), name, value.toString());
-		save(param);
+		// check for existing param with this name
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		Parameter param = (Parameter) s.get(Parameter.class, getID()+"_"+name);
+		// update if exists, create new otherwise.
+		if(param != null) {
+			param.setValue(value.toString());
+			s.update(param);
+		} else {
+			param = new Parameter(getID(), name, value.toString());
+			s.save(param);
+		}
+		s.getTransaction().commit();
+		s.close();
 	}
 
 	@SuppressWarnings("unchecked")
