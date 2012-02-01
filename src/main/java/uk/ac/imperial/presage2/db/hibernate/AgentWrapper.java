@@ -38,7 +38,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 
 	@Override
 	public UUID getID() {
-		return delegate.getId();
+		return delegate.getAid();
 	}
 
 	@Override

@@ -53,9 +53,10 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 		// check for existing param with this name
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
-		Parameter param = (Parameter) s.get(Parameter.class, getID()+"_"+name);
+		Parameter param = (Parameter) s.get(Parameter.class, getID() + "_"
+				+ name);
 		// update if exists, create new otherwise.
-		if(param != null) {
+		if (param != null) {
 			param.setValue(value.toString());
 			s.update(param);
 		} else {
@@ -183,14 +184,20 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 		return delegate.getName();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Set<PersistentAgent> getAgents() {
-		// TODO
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		List<Agent> agentsList = s.createQuery(
+				"from Agent where simId = " + getID()).list();
 		Set<PersistentAgent> agents = new HashSet<PersistentAgent>();
-		for (Agent a : delegate.getAgents()) {
+		for (Agent a : agentsList) {
 			agents.add(new AgentWrapper(a, this.sessionFactory));
 		}
-		return agents;
+		s.getTransaction().commit();
+		s.close();
+		return Collections.unmodifiableSet(agents);
 	}
 
 	@Override

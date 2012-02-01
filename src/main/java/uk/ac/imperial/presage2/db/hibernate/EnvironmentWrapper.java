@@ -24,8 +24,7 @@ import org.hibernate.SessionFactory;
 import uk.ac.imperial.presage2.core.db.persistent.PersistentEnvironment;
 import uk.ac.imperial.presage2.core.db.persistent.PersistentSimulation;
 
-class EnvironmentWrapper extends Updateable implements
-		PersistentEnvironment {
+class EnvironmentWrapper extends Updateable implements PersistentEnvironment {
 
 	final PersistentSimulation sim;
 

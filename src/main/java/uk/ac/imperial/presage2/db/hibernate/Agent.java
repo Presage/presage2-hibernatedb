@@ -26,7 +26,10 @@ import javax.persistence.Id;
 @Entity
 class Agent {
 
-	private UUID id;
+	@Id
+	private String id;
+	private Long simId;
+	private UUID aid;
 	private String name;
 	private Integer registeredAt;
 	private Integer deRegisteredAt;
@@ -35,15 +38,32 @@ class Agent {
 		super();
 	}
 
-	Agent(UUID id, String name) {
+	Agent(Long simId, UUID id, String name) {
 		super();
-		this.id = id;
+		this.simId = simId;
+		this.aid = id;
 		this.name = name;
+		this.id = this.simId + "-" + this.aid;
 	}
 
-	@Id
-	UUID getId() {
+	String getId() {
 		return id;
+	}
+
+	void setId(String id) {
+		this.id = id;
+	}
+
+	Long getSimId() {
+		return simId;
+	}
+
+	void setSimId(Long simId) {
+		this.simId = simId;
+	}
+
+	UUID getAid() {
+		return aid;
 	}
 
 	String getName() {
@@ -58,8 +78,8 @@ class Agent {
 		return deRegisteredAt;
 	}
 
-	void setId(UUID id) {
-		this.id = id;
+	void setAid(UUID id) {
+		this.aid = id;
 	}
 
 	void setName(String name) {

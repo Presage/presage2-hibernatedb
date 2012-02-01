@@ -43,9 +43,6 @@ class Simulation {
 	private Long finishedAt;
 	private Long parent;
 
-	// agents
-	private Set<Agent> agents;
-
 	Simulation() {
 	}
 
@@ -58,7 +55,6 @@ class Simulation {
 		this.currentTime = 0;
 		this.startedAt = 0L;
 		this.finishedAt = 0L;
-		this.agents = new HashSet<Agent>();
 		this.parent = null;
 	}
 
@@ -135,15 +131,6 @@ class Simulation {
 
 	void setFinishedAt(Long finishedAt) {
 		this.finishedAt = finishedAt;
-	}
-
-	@OneToMany
-	Set<Agent> getAgents() {
-		return agents;
-	}
-
-	void setAgents(Set<Agent> agents) {
-		this.agents = agents;
 	}
 
 	Long getParent() {

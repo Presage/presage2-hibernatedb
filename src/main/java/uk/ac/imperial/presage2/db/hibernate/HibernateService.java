@@ -119,9 +119,8 @@ public class HibernateService implements DatabaseService, StorageService {
 	public PersistentAgent createAgent(UUID agentID, String name) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Agent a = new Agent(agentID, name);
+		Agent a = new Agent(currentSim.getID(), agentID, name);
 		session.save(a);
-		currentSim.delegate.getAgents().add(a);
 		session.getTransaction().commit();
 		session.close();
 		return new AgentWrapper(a, sessionFactory);
@@ -131,7 +130,8 @@ public class HibernateService implements DatabaseService, StorageService {
 	public PersistentAgent getAgent(UUID agentID) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
-		Agent agent = (Agent) s.get(Agent.class, agentID);
+		Agent agent = (Agent) s.get(Agent.class, currentSim.getID() + "-"
+				+ agentID);
 		s.getTransaction().commit();
 		s.close();
 		return agent != null ? new AgentWrapper(agent, sessionFactory) : null;
