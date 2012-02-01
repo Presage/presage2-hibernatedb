@@ -64,7 +64,7 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 		List<Parameter> parameters = s.createQuery(
 				"from Parameter WHERE simId = " + getID()).list();
 		for (Parameter p : parameters) {
-			params.put(p.getKey(), p.getValue());
+			params.put(p.getName(), p.getValue());
 		}
 		s.getTransaction().commit();
 		s.close();

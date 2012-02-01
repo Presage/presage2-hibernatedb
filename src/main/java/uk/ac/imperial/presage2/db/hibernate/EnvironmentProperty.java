@@ -27,7 +27,7 @@ class EnvironmentProperty {
 	@Id
 	private String id;
 	private Long simId;
-	private String key;
+	private String name;
 	private Integer timestep = null;
 	private String value;
 
@@ -38,19 +38,19 @@ class EnvironmentProperty {
 	EnvironmentProperty(Long simId, String key, String value) {
 		super();
 		this.simId = simId;
-		this.key = key;
+		this.name = key;
 		this.value = value;
 		this.timestep = null;
-		this.id = this.simId + "-" + this.key;
+		this.id = this.simId + "-" + this.name;
 	}
 
 	EnvironmentProperty(Long simId, String key, Integer timestep, String value) {
 		super();
 		this.simId = simId;
-		this.key = key;
+		this.name = key;
 		this.timestep = timestep;
 		this.value = value;
-		this.id = this.simId + "-" + this.key + "-" + this.timestep;
+		this.id = this.simId + "-" + this.name + "-" + this.timestep;
 	}
 
 	String getId() {
@@ -69,12 +69,12 @@ class EnvironmentProperty {
 		this.simId = simId;
 	}
 
-	String getKey() {
-		return key;
+	String getName() {
+		return name;
 	}
 
-	void setKey(String key) {
-		this.key = key;
+	void setName(String key) {
+		this.name = key;
 	}
 
 	Integer getTimestep() {

@@ -29,7 +29,7 @@ class Parameter {
 	@Id
 	private String id;
 	private Long simId;
-	private String key;
+	private String name;
 	private String value;
 
 	protected Parameter() {
@@ -39,8 +39,8 @@ class Parameter {
 	Parameter(Long simId, String key, String value) {
 		super();
 		this.simId = simId;
-		this.key = key;
-		this.id = this.simId.toString() + "_" + this.key;
+		this.name = key;
+		this.id = this.simId.toString() + "_" + this.name;
 		this.value = value;
 	}
 
@@ -52,12 +52,12 @@ class Parameter {
 		this.id = id;
 	}
 
-	String getKey() {
-		return key;
+	String getName() {
+		return name;
 	}
 
-	void setKey(String key) {
-		this.key = key;
+	void setName(String key) {
+		this.name = key;
 	}
 
 	String getValue() {

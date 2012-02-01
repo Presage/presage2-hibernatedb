@@ -29,7 +29,7 @@ class AgentState {
 	@Id
 	private String id;
 	private UUID agentId;
-	private String key;
+	private String name;
 	private int timestep;
 	private String value;
 
@@ -40,10 +40,10 @@ class AgentState {
 	AgentState(UUID agentId, String key, int timestep, String value) {
 		super();
 		this.agentId = agentId;
-		this.key = key;
+		this.name = key;
 		this.timestep = timestep;
 		this.value = value;
-		this.id = this.agentId + "-" + this.key + "-" + this.timestep;
+		this.id = this.agentId + "-" + this.name + "-" + this.timestep;
 	}
 
 	String getId() {
@@ -62,12 +62,12 @@ class AgentState {
 		this.agentId = agentId;
 	}
 
-	String getKey() {
-		return key;
+	String getName() {
+		return name;
 	}
 
-	void setKey(String key) {
-		this.key = key;
+	void setName(String name) {
+		this.name = name;
 	}
 
 	int getTimestep() {

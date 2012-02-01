@@ -29,7 +29,7 @@ class AgentProperty {
 	@Id
 	private String id;
 	private UUID agentId;
-	private String key;
+	private String name;
 	private String value;
 
 	protected AgentProperty() {
@@ -39,9 +39,9 @@ class AgentProperty {
 	AgentProperty(UUID agentId, String key, String value) {
 		super();
 		this.agentId = agentId;
-		this.key = key;
+		this.name = key;
 		this.value = value;
-		this.id = this.agentId + "-" + this.key;
+		this.id = this.agentId + "-" + this.name;
 	}
 
 	String getId() {
@@ -60,12 +60,12 @@ class AgentProperty {
 		this.agentId = agentId;
 	}
 
-	String getKey() {
-		return key;
+	String getName() {
+		return name;
 	}
 
-	void setKey(String key) {
-		this.key = key;
+	void setName(String name) {
+		this.name = name;
 	}
 
 	String getValue() {
