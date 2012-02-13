@@ -49,7 +49,7 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 	}
 
 	@Override
-	public void addParameter(String name, Object value) {
+	public void addParameter(String name, String value) {
 		// check for existing param with this name
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
@@ -60,7 +60,7 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 			param.setValue(value.toString());
 			s.update(param);
 		} else {
-			param = new Parameter(getID(), name, value.toString());
+			param = new Parameter(getID(), name, value);
 			s.save(param);
 		}
 		s.getTransaction().commit();
@@ -69,8 +69,8 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> getParameters() {
-		Map<String, Object> params = new HashMap<String, Object>();
+	public Map<String, String> getParameters() {
+		Map<String, String> params = new HashMap<String, String>();
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		List<Parameter> parameters = s.createQuery(

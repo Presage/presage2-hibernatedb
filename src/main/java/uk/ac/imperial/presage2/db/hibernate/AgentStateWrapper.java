@@ -18,6 +18,10 @@
  */
 package uk.ac.imperial.presage2.db.hibernate;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -47,7 +51,7 @@ class AgentStateWrapper extends Updateable implements TransientAgentState {
 	}
 
 	@Override
-	public Object getProperty(String key) {
+	public String getProperty(String key) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		AgentState property = (AgentState) s.get(AgentState.class,
@@ -58,11 +62,27 @@ class AgentStateWrapper extends Updateable implements TransientAgentState {
 	}
 
 	@Override
-	public void setProperty(String key, Object value) {
+	public void setProperty(String key, String value) {
 		startTransaction();
 		AgentState state = new AgentState(agent.getID(), key, getTime(),
 				value.toString());
 		save(state);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, String> getProperties() {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		List<AgentState> propertyList = s
+				.createQuery(
+						"from AgentState where agentId = ? and timestep = ?")
+				.setParameter(0, agent.getID()).setParameter(1, time).list();
+		Map<String, String> properties = new HashMap<String, String>();
+		for (AgentState p : propertyList) {
+			properties.put(p.getName(), p.getValue());
+		}
+		return properties;
 	}
 
 }

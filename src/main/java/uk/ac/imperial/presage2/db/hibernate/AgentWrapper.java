@@ -18,6 +18,8 @@
  */
 package uk.ac.imperial.presage2.db.hibernate;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -61,7 +63,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 	}
 
 	@Override
-	public Object getProperty(String key) {
+	public String getProperty(String key) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		AgentProperty property = (AgentProperty) s.get(AgentProperty.class,
@@ -72,7 +74,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 	}
 
 	@Override
-	public void setProperty(String key, Object value) {
+	public void setProperty(String key, String value) {
 		startTransaction();
 		AgentProperty property = new AgentProperty(getID(), key,
 				value.toString());
@@ -80,15 +82,23 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 	}
 
 	@Override
-	public void createRelationshipTo(PersistentAgent p, String type,
-			Map<String, Object> parameters) {
-		throw new UnsupportedOperationException(
-				"createRelationshipTo not implemented in hibernate db.");
-	}
-
-	@Override
 	public TransientAgentState getState(int time) {
 		return new AgentStateWrapper(sessionFactory, this, time);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, String> getProperties() {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		List<AgentProperty> propertyList = s
+				.createQuery("from AgentProperty where agentId = ?")
+				.setParameter(0, getID()).list();
+		Map<String, String> properties = new HashMap<String, String>();
+		for (AgentProperty p : propertyList) {
+			properties.put(p.getName(), p.getValue());
+		}
+		return properties;
 	}
 
 }

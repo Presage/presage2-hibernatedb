@@ -18,6 +18,10 @@
  */
 package uk.ac.imperial.presage2.db.hibernate;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -34,7 +38,7 @@ class EnvironmentWrapper extends Updateable implements PersistentEnvironment {
 	}
 
 	@Override
-	public Object getProperty(String key) {
+	public String getProperty(String key) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		EnvironmentProperty property = (EnvironmentProperty) s.get(
@@ -45,15 +49,15 @@ class EnvironmentWrapper extends Updateable implements PersistentEnvironment {
 	}
 
 	@Override
-	public void setProperty(String key, Object value) {
+	public void setProperty(String key, String value) {
 		startTransaction();
 		EnvironmentProperty property = new EnvironmentProperty(sim.getID(),
-				key, value.toString());
+				key, value);
 		save(property);
 	}
 
 	@Override
-	public Object getProperty(String key, int timestep) {
+	public String getProperty(String key, int timestep) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		EnvironmentProperty property = (EnvironmentProperty) s.get(
@@ -65,11 +69,41 @@ class EnvironmentWrapper extends Updateable implements PersistentEnvironment {
 	}
 
 	@Override
-	public void setProperty(String key, int timestep, Object value) {
+	public void setProperty(String key, int timestep, String value) {
 		startTransaction();
 		EnvironmentProperty property = new EnvironmentProperty(sim.getID(),
-				key, timestep, value.toString());
+				key, timestep, value);
 		save(property);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, String> getProperties() {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		List<EnvironmentProperty> propertyList = s.createQuery(
+				"from EnvironmentProperty where simId = " + sim.getID()
+						+ " and timestep is null").list();
+		Map<String, String> properties = new HashMap<String, String>();
+		for (EnvironmentProperty p : propertyList) {
+			properties.put(p.getName(), p.getValue());
+		}
+		return properties;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, String> getProperties(int timestep) {
+		Session s = sessionFactory.openSession();
+		s.beginTransaction();
+		List<EnvironmentProperty> propertyList = s.createQuery(
+				"from EnvironmentProperty where simId = " + sim.getID()
+						+ " and timestep = " + timestep).list();
+		Map<String, String> properties = new HashMap<String, String>();
+		for (EnvironmentProperty p : propertyList) {
+			properties.put(p.getName(), p.getValue());
+		}
+		return properties;
 	}
 
 }

@@ -27,10 +27,8 @@ import org.hibernate.cfg.Configuration;
 
 import uk.ac.imperial.presage2.core.db.DatabaseService;
 import uk.ac.imperial.presage2.core.db.StorageService;
-import uk.ac.imperial.presage2.core.db.Transaction;
 import uk.ac.imperial.presage2.core.db.persistent.PersistentAgent;
 import uk.ac.imperial.presage2.core.db.persistent.PersistentSimulation;
-import uk.ac.imperial.presage2.core.db.persistent.SimulationFactory;
 import uk.ac.imperial.presage2.core.db.persistent.TransientAgentState;
 
 public class HibernateService implements DatabaseService, StorageService {
@@ -111,11 +109,6 @@ public class HibernateService implements DatabaseService, StorageService {
 	}
 
 	@Override
-	public SimulationFactory getSimulationFactory() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public PersistentAgent createAgent(UUID agentID, String name) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -141,11 +134,6 @@ public class HibernateService implements DatabaseService, StorageService {
 	public TransientAgentState getAgentState(UUID agentID, int time) {
 		PersistentAgent agent = getAgent(agentID);
 		return agent != null ? agent.getState(time) : null;
-	}
-
-	@Override
-	public Transaction startTransaction() {
-		throw new UnsupportedOperationException("Transactions depreciated.");
 	}
 
 }
