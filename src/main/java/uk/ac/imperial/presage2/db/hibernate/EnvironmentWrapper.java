@@ -88,6 +88,7 @@ class EnvironmentWrapper extends Updateable implements PersistentEnvironment {
 		for (EnvironmentProperty p : propertyList) {
 			properties.put(p.getName(), p.getValue());
 		}
+		s.close();
 		return properties;
 	}
 
@@ -103,6 +104,7 @@ class EnvironmentWrapper extends Updateable implements PersistentEnvironment {
 		for (EnvironmentProperty p : propertyList) {
 			properties.put(p.getName(), p.getValue());
 		}
+		s.close();
 		return properties;
 	}
 

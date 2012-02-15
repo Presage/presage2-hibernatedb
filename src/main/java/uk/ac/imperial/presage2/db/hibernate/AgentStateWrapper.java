@@ -82,6 +82,7 @@ class AgentStateWrapper extends Updateable implements TransientAgentState {
 		for (AgentState p : propertyList) {
 			properties.put(p.getName(), p.getValue());
 		}
+		s.close();
 		return properties;
 	}
 

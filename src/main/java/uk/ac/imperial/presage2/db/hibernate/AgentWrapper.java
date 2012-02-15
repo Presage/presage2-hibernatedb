@@ -98,6 +98,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 		for (AgentProperty p : propertyList) {
 			properties.put(p.getName(), p.getValue());
 		}
+		s.close();
 		return properties;
 	}
 
