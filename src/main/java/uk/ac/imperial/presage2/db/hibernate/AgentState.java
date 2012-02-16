@@ -18,8 +18,6 @@
  */
 package uk.ac.imperial.presage2.db.hibernate;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
