@@ -54,8 +54,8 @@ class AgentStateWrapper extends Updateable implements TransientAgentState {
 	public String getProperty(String key) {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
-		AgentState property = (AgentState) s.get(AgentState.class,
-				agent.getID() + "-" + key + "-" + getTime());
+		AgentState property = (AgentState) s.get(AgentState.class, agent
+				.getID().toString() + "-" + key + "-" + getTime());
 		s.getTransaction().commit();
 		s.close();
 		return property != null ? property.getValue() : null;
@@ -64,8 +64,8 @@ class AgentStateWrapper extends Updateable implements TransientAgentState {
 	@Override
 	public void setProperty(String key, String value) {
 		startTransaction();
-		AgentState state = new AgentState(agent.getID(), key, getTime(),
-				value.toString());
+		AgentState state = new AgentState(agent.getID().toString(), key,
+				getTime(), value.toString());
 		save(state);
 	}
 
@@ -77,7 +77,8 @@ class AgentStateWrapper extends Updateable implements TransientAgentState {
 		List<AgentState> propertyList = s
 				.createQuery(
 						"from AgentState where agentId = ? and timestep = ?")
-				.setParameter(0, agent.getID()).setParameter(1, time).list();
+				.setParameter(0, agent.getID().toString())
+				.setParameter(1, time).list();
 		Map<String, String> properties = new HashMap<String, String>();
 		for (AgentState p : propertyList) {
 			properties.put(p.getName(), p.getValue());

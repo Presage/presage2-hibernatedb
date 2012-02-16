@@ -28,7 +28,7 @@ class AgentState {
 
 	@Id
 	private String id;
-	private UUID agentId;
+	private String agentId;
 	private String name;
 	private int timestep;
 	private String value;
@@ -37,7 +37,7 @@ class AgentState {
 		// for hibernate
 	}
 
-	AgentState(UUID agentId, String key, int timestep, String value) {
+	AgentState(String agentId, String key, int timestep, String value) {
 		super();
 		this.agentId = agentId;
 		this.name = key;
@@ -54,11 +54,11 @@ class AgentState {
 		this.id = id;
 	}
 
-	UUID getAgentId() {
+	String getAgentId() {
 		return agentId;
 	}
 
-	void setAgentId(UUID agentId) {
+	void setAgentId(String agentId) {
 		this.agentId = agentId;
 	}
 

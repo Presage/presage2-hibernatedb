@@ -18,8 +18,6 @@
  */
 package uk.ac.imperial.presage2.db.hibernate;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -28,7 +26,7 @@ class AgentProperty {
 
 	@Id
 	private String id;
-	private UUID agentId;
+	private String agentId;
 	private String name;
 	private String value;
 
@@ -36,7 +34,7 @@ class AgentProperty {
 		// for hibernate
 	}
 
-	AgentProperty(UUID agentId, String key, String value) {
+	AgentProperty(String agentId, String key, String value) {
 		super();
 		this.agentId = agentId;
 		this.name = key;
@@ -52,11 +50,11 @@ class AgentProperty {
 		this.id = id;
 	}
 
-	UUID getAgentId() {
+	String getAgentId() {
 		return agentId;
 	}
 
-	void setAgentId(UUID agentId) {
+	void setAgentId(String agentId) {
 		this.agentId = agentId;
 	}
 

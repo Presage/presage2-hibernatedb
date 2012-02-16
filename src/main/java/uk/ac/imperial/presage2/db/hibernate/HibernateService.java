@@ -112,7 +112,7 @@ public class HibernateService implements DatabaseService, StorageService {
 	public PersistentAgent createAgent(UUID agentID, String name) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		Agent a = new Agent(currentSim.getID(), agentID, name);
+		Agent a = new Agent(currentSim.getID(), agentID.toString(), name);
 		session.save(a);
 		session.getTransaction().commit();
 		session.close();

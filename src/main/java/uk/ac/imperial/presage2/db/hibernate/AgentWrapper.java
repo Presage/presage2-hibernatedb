@@ -40,7 +40,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 
 	@Override
 	public UUID getID() {
-		return delegate.getAid();
+		return UUID.fromString(delegate.getAid());
 	}
 
 	@Override
@@ -67,7 +67,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 		Session s = sessionFactory.openSession();
 		s.beginTransaction();
 		AgentProperty property = (AgentProperty) s.get(AgentProperty.class,
-				getID() + "-" + key);
+				delegate.getAid() + "-" + key);
 		s.getTransaction().commit();
 		s.close();
 		return property != null ? property.getValue() : null;
@@ -76,7 +76,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 	@Override
 	public void setProperty(String key, String value) {
 		startTransaction();
-		AgentProperty property = new AgentProperty(getID(), key,
+		AgentProperty property = new AgentProperty(delegate.getAid(), key,
 				value.toString());
 		save(property);
 	}
@@ -93,7 +93,7 @@ class AgentWrapper extends Updateable implements PersistentAgent {
 		s.beginTransaction();
 		List<AgentProperty> propertyList = s
 				.createQuery("from AgentProperty where agentId = ?")
-				.setParameter(0, getID()).list();
+				.setParameter(0, getID().toString()).list();
 		Map<String, String> properties = new HashMap<String, String>();
 		for (AgentProperty p : propertyList) {
 			properties.put(p.getName(), p.getValue());

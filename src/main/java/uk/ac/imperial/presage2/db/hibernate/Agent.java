@@ -18,8 +18,6 @@
  */
 package uk.ac.imperial.presage2.db.hibernate;
 
-import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -29,7 +27,7 @@ class Agent {
 	@Id
 	private String id;
 	private Long simId;
-	private UUID aid;
+	private String aid;
 	private String name;
 	private Integer registeredAt;
 	private Integer deRegisteredAt;
@@ -38,7 +36,7 @@ class Agent {
 		super();
 	}
 
-	Agent(Long simId, UUID id, String name) {
+	Agent(Long simId, String id, String name) {
 		super();
 		this.simId = simId;
 		this.aid = id;
@@ -62,7 +60,7 @@ class Agent {
 		this.simId = simId;
 	}
 
-	UUID getAid() {
+	String getAid() {
 		return aid;
 	}
 
@@ -78,7 +76,7 @@ class Agent {
 		return deRegisteredAt;
 	}
 
-	void setAid(UUID id) {
+	void setAid(String id) {
 		this.aid = id;
 	}
 
