@@ -115,7 +115,8 @@ class SimWrapper extends Updateable implements PersistentSimulation {
 	@Override
 	public void setParentSimulation(PersistentSimulation parent) {
 		startTransaction();
-		delegate.setParent(parent.getID());
+		Long parentId = parent != null ? parent.getID() : null;
+		delegate.setParent(parentId);
 		update(delegate);
 	}
 
